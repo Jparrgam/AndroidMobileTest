@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MobileTest</string>
+    <string name="content_description">content_description</string>
+    <string name="_splash_title">Prueba Desarrollador \n Android</string>
+    <string name="_unexpected_error">Ups! ha ocurrido un error inesperado</string>
+    <string name="_validate_connect">No tienes conexion a internet</string>
+    <string name="_details_item">Click sobre la imagen para ver el detalle</string>
+    <string name="_message_not_network_disconnect">No tienes conexion a internet</string>
+</resources>

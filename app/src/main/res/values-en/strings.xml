@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="_splash_title">Android Developer test</string>
+    <string name="_validate_connect">You do not have internet connection</string>
+    <string name="_details_item">Click on the image to see the details</string>
+    <string name="_unexpected_error">Oops! An unexpected error has occurred</string>
+    <string name="_message_not_network_disconnect">You do not have internet connection</string>
+</resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_height="100dp"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardCornerRadius="0dp"
+    card_view:cardElevation="0dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="20sp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/nameReddit"
+            android:textColor="@color/colorPrimary"
+            android:layout_toRightOf="@+id/imageReddit"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/RedditDescription"
+            android:layout_alignEnd="@+id/RedditDescription"
+            tools:ignore="RtlHardcoded"/>
+
+        <ImageView
+            android:id="@+id/imageReddit"
+            android:layout_width="100dp"
+            android:scaleType="fitXY"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/content_description"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=""
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/RedditDescription"
+            android:layout_toRightOf="@+id/imageReddit"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/nameReddit"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            tools:ignore="RtlHardcoded"/>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
