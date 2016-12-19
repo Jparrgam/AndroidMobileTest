@@ -42,4 +42,11 @@ public interface ViewReddits {
      * @param status
      */
     void onNetworkStatusChanged (boolean status);
+
+    /**
+     * method callback long listener adapter recyclerView
+     *
+     * @param redditsModelEntity
+     */
+    void onLongUserListener (int redditsModelEntity);
 }

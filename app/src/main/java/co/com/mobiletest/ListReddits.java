@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
 
@@ -37,7 +39,7 @@ import top.wefor.circularanim.CircularAnim;
  * @see ViewReddits
  */
 @SuppressWarnings("ALL")
-public class ListReddits extends AppCompatActivity implements ViewReddits {
+public class ListReddits extends AppCompatActivity implements ViewReddits, Toolbar.OnMenuItemClickListener {
 
     /**
      * Injection views
@@ -46,12 +48,15 @@ public class ListReddits extends AppCompatActivity implements ViewReddits {
     RecyclerView recyclerViewReddists;
     @BindView(R.id._progress_bar_reddists)
     ProgressWheel _progress_bar_reddists;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     /**
      * configuration and local variables
      */
     private GetRedditsPresenter getReddistsPresenter;
     private RecyclerViewRedditAdapter recyclerViewRedditAdapter;
+    private int positionDelete;
 
     /**
      * onCreate view
@@ -62,6 +67,7 @@ public class ListReddits extends AppCompatActivity implements ViewReddits {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_reddists);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
 
         getReddistsPresenter = new GetRedditsPresenterImpl(this);
         getReddistsPresenter.setContext(this);
@@ -77,6 +83,10 @@ public class ListReddits extends AppCompatActivity implements ViewReddits {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             recyclerViewReddists.setLayoutManager(linearLayoutManager);
         }
+        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+        defaultItemAnimator.setAddDuration(1000);
+        defaultItemAnimator.setRemoveDuration(1000);
+        recyclerViewReddists.setItemAnimator(defaultItemAnimator);
         WifiBroadcastReceiver.setCallbackManager(this);
         getReddistsPresenter.getReddists(constant._SERVICE_URL);
     }
@@ -154,5 +164,57 @@ public class ListReddits extends AppCompatActivity implements ViewReddits {
         } else {
             Crouton.cancelAllCroutons();
         }
+    }
+
+    /**
+     * method callback long listener adapter recyclerView
+     *
+     * @param redditsModelEntity
+     */
+    @Override
+    public void onLongUserListener(int redditsModelEntity) {
+        positionDelete = redditsModelEntity;
+        if(!toolbar.getTitle().equals(getResources().getString(R.string._menu_options_title))) {
+            toolbar.setTitle(getResources().getString(R.string._menu_options_title));
+            toolbar.inflateMenu(R.menu.menu_options);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setOnMenuItemClickListener(this);
+        }
+    }
+
+    /**
+     * This method will be invoked when a menu item is clicked if the item itself did
+     * not already handle the event.
+     *
+     * @param item {@link MenuItem} that was clicked
+     * @return <code>true</code> if the event was handled, <code>false</code> otherwise.
+     */
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+                recyclerViewRedditAdapter.removeAt(positionDelete);
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                setDefaultToolbar ();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * default toolbar
+     */
+    private void setDefaultToolbar() {
+        toolbar.setTitle(getResources().getString(R.string.app_name));
+        toolbar.getMenu().clear();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 }

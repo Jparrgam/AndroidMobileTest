@@ -2,6 +2,7 @@ package co.com.mobiletest.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -9,12 +10,10 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.getkeepsafe.taptargetview.TapTargetView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -23,6 +22,8 @@ import butterknife.ButterKnife;
 import co.com.mobiletest.R;
 import co.com.mobiletest.view.ViewReddits;
 import co.com.mobiletest.persistent.model.RedditsModelEntity;
+
+import me.grantland.widget.AutofitTextView;
 
 /**
  * @author Jaime Gamboa
@@ -37,7 +38,7 @@ public class RecyclerViewRedditAdapter extends RecyclerView.Adapter<RecyclerView
      */
     private List<RedditsModelEntity> items;
     private Context context;
-    private ViewReddits viewReddits;
+    public ViewReddits viewReddits;
 
 
     public RecyclerViewRedditAdapter(List<RedditsModelEntity> items, Context context, ViewReddits viewReddits) {
@@ -94,13 +95,15 @@ public class RecyclerViewRedditAdapter extends RecyclerView.Adapter<RecyclerView
      */
     @TargetApi(Build.VERSION_CODES.N)
     @Override
-    public void onBindViewHolder(cardViewHolderReddit holder, int position) {
+    public void onBindViewHolder(final cardViewHolderReddit holder, int position) {
+        holder.currentItem = position;
         final RedditsModelEntity modelEntity = items.get(position);
         holder.RedditDescription.setMovementMethod(new ScrollingMovementMethod());
-        Glide.with(this.context)
-                .load(modelEntity.getBanner_img())
-                .placeholder(R.mipmap.splash_screen)
-                .into(holder.imageReddit);
+
+        if(modelEntity.getBanner_img() != null && !modelEntity.getBanner_img().isEmpty()) {
+            holder.imageReddit.setImageURI(Uri.parse(modelEntity.getBanner_img()));
+        }
+
         holder.nameReddit.setText(modelEntity.getDisplay_name());
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             if(modelEntity.getPublic_description() != null) {
@@ -117,6 +120,14 @@ public class RecyclerViewRedditAdapter extends RecyclerView.Adapter<RecyclerView
                 viewReddits.onItemSelected(modelEntity, view);
             }
         });
+
+        holder.view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                viewReddits.onLongUserListener(holder.currentItem);
+                return false;
+            }
+        });
     }
 
     /**
@@ -130,19 +141,34 @@ public class RecyclerViewRedditAdapter extends RecyclerView.Adapter<RecyclerView
         return items.size();
     }
 
+    /**
+     * remove item to adapter
+     *
+     * @param position
+     */
+    public void removeAt(int position) {
+        this.items.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position,items.size());
+        notifyDataSetChanged();
+    }
 
     /**
      * @author Jaime Gamboa
      * @see android.support.v7.widget.RecyclerView.ViewHolder
      */
-    static class cardViewHolderReddit extends RecyclerView.ViewHolder {
+    class cardViewHolderReddit extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.imageReddit) ImageView imageReddit;
+        public View view;
+        public int currentItem;
+
+        @BindView(R.id.imageReddit) SimpleDraweeView imageReddit;
         @BindView(R.id.nameReddit) TextView nameReddit;
-        @BindView(R.id.RedditDescription) TextView RedditDescription;
+        @BindView(R.id.RedditDescription) AutofitTextView RedditDescription;
 
         public cardViewHolderReddit(View itemView) {
             super(itemView);
+            view = itemView;
             ButterKnife.bind(this,itemView);
         }
     }

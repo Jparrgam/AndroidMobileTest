@@ -6,4 +6,6 @@
     <string name="_validate_connect">No tienes conexion a internet</string>
     <string name="_details_item">Click sobre la imagen para ver el detalle</string>
     <string name="_message_not_network_disconnect">No tienes conexion a internet</string>
+    <string name="_menu_options_delete">Delete item</string>
+    <string name="_menu_options_title">Opciones</string>
 </resources>

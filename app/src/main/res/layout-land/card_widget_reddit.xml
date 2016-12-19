@@ -2,18 +2,15 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="200dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="250dp"
     android:background="@android:color/white"
     android:layout_height="200dp"
-    android:layout_marginRight="30dp"
     card_view:cardBackgroundColor="@android:color/white"
-    card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="0dp"
-    card_view:contentPaddingLeft="10dp"
-    card_view:contentPaddingBottom="10dp"
-    card_view:contentPaddingRight="10dp"
-    card_view:contentPaddingTop="10dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardCornerRadius="1dp"
+    card_view:cardElevation="5dp"
+    card_view:cardMaxElevation="10dp"
+    card_view:cardUseCompatPadding="false">
 
     <RelativeLayout
         android:id="@+id/content"
@@ -22,33 +19,43 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="20sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text=""
-            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
             android:id="@+id/nameReddit"
             android:textColor="@color/colorPrimary"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/imageReddit"
-            android:layout_above="@+id/RedditDescription" />
+            android:layout_toRightOf="@+id/imageReddit"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/RedditDescription"
+            android:layout_alignEnd="@+id/RedditDescription"
+            tools:ignore="RtlHardcoded"/>
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
+            xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imageReddit"
             android:layout_width="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="centerCrop"
             android:layout_height="100dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="@string/content_description"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            fresco:roundAsCircle="true"
+            fresco:fadeDuration="300"
+            fresco:retryImageScaleType="centerCrop"
+            fresco:roundedCornerRadius="3dp"
+            fresco:roundingBorderWidth="2dp"
+            fresco:roundingBorderColor="@android:color/white"
+            fresco:placeholderImage="@mipmap/ic_placeholder"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:progressBarImageScaleType="centerInside"
+            tools:ignore="RtlHardcoded"/>
 
-        <TextView
-            android:layout_width="100dp"
+        <me.grantland.widget.AutofitTextView
+            xmlns:autofit="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text=""
@@ -57,8 +64,15 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            tools:ignore="RtlHardcoded"
+            android:maxLines="2"
+            android:textSize="200sp"
+            autofit:minTextSize="10sp"
+            android:layout_marginTop="10dp"
+            android:layout_alignLeft="@+id/imageReddit"
+            android:layout_alignStart="@+id/imageReddit"
+            android:layout_below="@+id/imageReddit"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

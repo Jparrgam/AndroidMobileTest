@@ -38,7 +38,11 @@ public class GetRedditsIteratorImpl implements GetRedditsIterator {
      */
     @Override
     public void getInfoService(String service, final onRequestFinished onRequestFinished) {
-        new AsyncHttpClient().get(service, new AsyncHttpResponseHandler() {
+        AsyncHttpClient  httpClient =  new AsyncHttpClient();
+        httpClient.setTimeout(20 * 1000);
+        httpClient.setConnectTimeout(20*1000);
+        httpClient.setResponseTimeout(20*1000);
+        httpClient.get(service, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if(statusCode == 200) {

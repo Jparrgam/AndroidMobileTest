@@ -3,6 +3,8 @@ package co.com.mobiletest.persistent;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import java.util.List;
 
 import co.com.mobiletest.persistent.model.RedditsModelEntity;
@@ -22,6 +24,7 @@ public class RedditDatabase extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Fresco.initialize(this);
         Sprinkles sprinkles = Sprinkles.init(getApplicationContext());
 
         sprinkles.addMigration(new Migration() {

@@ -4,8 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DetailsReddist">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_details"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        app:titleMarginStart="20dp"
+        app:theme="@style/ToolbarColoredBackArrow"
+        app:title="@string/app_name"
+        app:titleTextColor="@android:color/white"
+        android:background="@color/colorPrimaryDark"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,10 +38,10 @@
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayout">
+        android:id="@+id/relativeLayout"
+        android:layout_below="@+id/toolbar_details">
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,15 +58,26 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/ImageRedditDetails"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.facebook.drawee.view.SimpleDraweeView
+            xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            fresco:roundAsCircle="true"
+            fresco:fadeDuration="300"
+            fresco:retryImageScaleType="centerCrop"
+            fresco:roundedCornerRadius="3dp"
+            fresco:roundingBorderWidth="2dp"
+            fresco:failureImageScaleType="centerCrop"
+            fresco:progressBarImage="@mipmap/ic_placeholder"
+            fresco:failureImage="@mipmap/ic_placeholder"
+            fresco:roundingBorderColor="@android:color/white"
+            fresco:placeholderImage="@mipmap/ic_placeholder"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:progressBarImageScaleType="centerInside"
             android:id="@+id/ImageRedditDetails"
-            android:src="@mipmap/ic_launcher"
-            app:border_width="2dp"
-            app:border_color="@android:color/white"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="19dp"/>
+            android:layout_marginTop="19dp" />
+
     </RelativeLayout>
 </RelativeLayout>
